@@ -21,15 +21,16 @@
 	"opencv2/highgui/highgui.hpp"
 	"opencv2/imgproc/imgproc.hpp"
 
-1529631709 source:/home/cesar/MinotauroAGV/main.cpp
+1529636153 source:/home/cesar/MinotauroAGV/main.cpp
 	<opencv2/core/core.hpp>
 	<opencv2/imgproc/imgproc.hpp>
 	<opencv2/highgui/highgui.hpp>
 	"LineFollower.h"
 	<iostream>
 	<stdio.h>
+	<unistd.h>
 
-1529632341 /home/cesar/MinotauroAGV/include/LineFollower.h
+1529634688 /home/cesar/MinotauroAGV/include/LineFollower.h
 	"LineDetection.h"
 	<iostream>
 
@@ -40,6 +41,7 @@
 1529630212 source:/home/cesar/MinotauroAGV/src/LineDetection.cpp
 	"LineDetection.h"
 
-1529631675 source:/home/cesar/MinotauroAGV/src/LineFollower.cpp
+1529635989 source:/home/cesar/MinotauroAGV/src/LineFollower.cpp
 	"LineFollower.h"
+	<string>
 

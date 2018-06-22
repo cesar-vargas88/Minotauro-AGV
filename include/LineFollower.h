@@ -7,15 +7,12 @@ using namespace std;
 
 struct MotorsControl
 {
-    int MotorFrontLeft;
     int MotorFrontLeft_PWM;
-    int MotorFrontRight;
     int MotorFrontRight_PWM;
-    int MotorRearLeft;
     int MotorRearLeft_PWM;
-    int MotorRearRight;
     int MotorRearRight_PWM;
     struct_Error error;
+    string PIDvariables;
 };
 
 class LineFollower

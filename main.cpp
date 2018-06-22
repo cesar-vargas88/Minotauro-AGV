@@ -4,6 +4,7 @@
 #include "LineFollower.h"
 #include <iostream>
 #include <stdio.h>
+#include <unistd.h>
 
 using namespace std;
 using namespace cv;
@@ -15,9 +16,12 @@ int main(int argc, char *argv[])
 
     while(true)
     {
+        usleep(100000);
+
         motorsControl = lineFollower.GetMotorsControl();
 
-        cout << "Error: " << motorsControl.error.PIDValue << endl;
+        //cout << "Error: " << motorsControl.error.PIDValue << endl;
+        cout << motorsControl.PIDvariables << endl;
         imshow("Binary", motorsControl.error.ImageBinary);
 
         if(waitKey(30) >= 0)
