@@ -1,23 +1,22 @@
 #include "LineFollower.h"
 #include <string>
 
-LineFollower::LineFollower(int KP, int KI, int KD, int Speed, int CameraID)
+LineFollower::LineFollower(float kP, float kI, float kD, float tiempoMuestreo, int speed, int CameraID, int Cols, int Rows)
 {
-    kP = KP;
-    kI = KI;
-    kD  = KD;
-    speed = Speed;
+    KP  = kP;
+    KI  = kI;
+    KD  = kD;
+    TiempoMuestreo = tiempoMuestreo;
+    Speed = speed;
 
-    fError      = 0;
-    fLast_Error = 0;
-    fP      = 0;
-    fI      = 0;
-    fD      = 0;
-    fPID    = 0;
-    fLast_I = 0;
+    Error           = 0;
+    LastError       = 0;
+    Proportional    = 0;
+    Integral        = 0;
+    Derivative      = 0;
+    PID             = 0;
 
-
-    lineDetection.OpenCamera(CameraID);
+    lineDetection.OpenCamera(CameraID, Cols, Rows);
 }
 
 LineFollower::~LineFollower()
@@ -29,19 +28,16 @@ MotorsControl LineFollower::GetMotorsControl()
 {
     motorsControl.error = lineDetection.GetError();
 
-    fError = motorsControl.error.PIDValue;
+    Error        =  motorsControl.error.value;
+    Proportional =  Error;
+	Integral    +=  Error * TiempoMuestreo;
+	Derivative   = (Error - LastError) / TiempoMuestreo;
 
+	PID = (KP * Error) + (KI * Integral) + (KD * Derivative);
 
-    fP = fError;
-	fI = fI + fLast_I;
-	fD = fError - fLast_Error;
+	LastError = Error;
 
-	fPID = (kP * fP) + (kI * fI) + (kD * fD);
-
-	fLast_I = fI;
-	fLast_Error = fError;
-
-	int SpeedMotorFrontLeft 	= speed - fPID;
+	/*int SpeedMotorFrontLeft 	= speed - fPID;
 	int SpeedMotorRearLeft 		= speed - fPID;
 	int SpeedMotorFrontRight 	= speed + fPID;
 	int SpeedMotorRearRight 	= speed + fPID;
@@ -49,9 +45,15 @@ MotorsControl LineFollower::GetMotorsControl()
 	motorsControl.MotorFrontLeft_PWM;
     motorsControl.MotorFrontRight_PWM;
     motorsControl.MotorRearLeft_PWM;
-    motorsControl.MotorRearRight_PWM;
-    motorsControl.PIDvariables =    "Error: " + to_string(fError) + "\tfLast_Error: " + to_string(fLast_Error) + "\tfPID: " + to_string(fPID) +
-                                    "\tfP: " + to_string(fP) + "\tfI: "+ to_string(fI) + "\tfLast_I: " + to_string(fLast_I) + "\tfD: " + to_string(fD)  +
-                                    "\t(kP * fP): " + to_string(kP * fP) + "\t(kI * fI): " + to_string(kI * fI) + "\t(kD * fD): " + to_string(kD * fD);
+    motorsControl.MotorRearRight_PWM;*/
+    motorsControl.PIDvariables =    "Error: "                   + to_string((int)Error) +
+                                    //"\tLastError: "             + to_string(LastError) +
+                                    "\tfPID: "                  + to_string(PID);// +
+                                    //"\tProportional: "          + to_string(Proportional) +
+                                    //"\tIntegral: "              + to_string(Integral) +
+                                    //"\tDerivative: "            + to_string(Derivative)  +
+                                    //"\t(KP * Proportional): "   + to_string(KP * Proportional) +
+                                    //"\t(KI * Integral): "       + to_string(KI * Integral) +
+                                    //"\t(KD * Derivative): "     + to_string(KD * Derivative);
     return motorsControl;
 }

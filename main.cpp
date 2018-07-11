@@ -5,27 +5,38 @@
 #include <iostream>
 #include <stdio.h>
 #include <unistd.h>
+#include <ctime>
 
 using namespace std;
 using namespace cv;
 
 int main(int argc, char *argv[])
 {
-    LineFollower lineFollower(60,1, 50, 255, 1);
+    LineFollower lineFollower(5, 0.5, 2, 0.1, 0.1, 1, 640, 480);
     MotorsControl motorsControl;
+
+    clock_t Start;
+    clock_t End;
+
+    int i= 0;
 
     while(true)
     {
-        usleep(100000);
-
+        Start = clock();
         motorsControl = lineFollower.GetMotorsControl();
-
-        //cout << "Error: " << motorsControl.error.PIDValue << endl;
         cout << motorsControl.PIDvariables << endl;
-        imshow("Binary", motorsControl.error.ImageBinary);
 
-        if(waitKey(30) >= 0)
-            break;
+        imshow("Source", motorsControl.error.image);
+
+        //while(clock() <= Start + 1000000)
+        //{
+            //usleep(1);
+            //cout << "." << endl;
+        //}
+
+        //cout << "Start: " << Start << " End: " << clock() << " Diference: " << clock() - Start << endl;
+        usleep(100000 - (clock()-Start));
+
     }
     waitKey(0);
     return 0;

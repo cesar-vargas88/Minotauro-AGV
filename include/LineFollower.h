@@ -19,7 +19,7 @@ class LineFollower
 {
     public:
 
-        LineFollower(int KP, int KI, int KD, int Speed, int CameraID);
+        LineFollower(float kP, float kI, float kD, float tiempoMuestreo, int speed, int CameraID, int Cols, int Rows);
         virtual ~LineFollower();
 
         MotorsControl GetMotorsControl();
@@ -28,18 +28,21 @@ class LineFollower
 
         LineDetection lineDetection;
 
-        float kP;
-        float kI;
-        float kD;
-        int   speed;
+        int   Speed;
 
-    	float fError;
-        float fP;
-        float fI;
-        float fD;
-        float fPID;
-        float fLast_Error;
-        float fLast_I;
+        float KP;
+        float KI;
+        float KD;
+
+    	float Error;
+        float LastError;
+
+        float Proportional;
+        float Integral;
+        float Derivative;
+        float PID;
+
+        float TiempoMuestreo;
 
         MotorsControl motorsControl;
 };

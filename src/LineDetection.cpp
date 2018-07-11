@@ -2,8 +2,7 @@
 
 LineDetection::LineDetection()
 {
-    capture.set(CV_CAP_PROP_FRAME_WIDTH, 640);
-    capture.set(CV_CAP_PROP_FRAME_WIDTH, 480);
+
 }
 
 LineDetection::~LineDetection()
@@ -11,8 +10,13 @@ LineDetection::~LineDetection()
     //dtor
 }
 
-bool LineDetection::OpenCamera(int Camera_ID)
+bool LineDetection::OpenCamera(int Camera_ID, int Cols, int Rows)
 {
+    cols = Cols;
+    rows = Rows;
+
+    capture.set(CV_CAP_PROP_FRAME_WIDTH, cols);
+    capture.set(CV_CAP_PROP_FRAME_WIDTH, rows);
     camera_ID = Camera_ID;
 
     capture.open(1);
@@ -25,37 +29,34 @@ bool LineDetection::OpenCamera(int Camera_ID)
 
 struct_Error LineDetection::GetError()
 {
-    Mat src;
-    Mat blur;
-    Mat gray;
+    capture.read(error.image);
+    Mat partialImage = error.image(cv::Rect(0, rows*.495, cols, rows*.01));
+    medianBlur(partialImage, partialImage, 11);
+    Mat gray = Gray(partialImage);
+    Mat binary = Binary(gray);
+    binary.copyTo(partialImage);
 
     int nCount = 0;
     int nSum   = 0;
 
-    capture.read(src);
-
-    medianBlur(src, blur, 101);
-    gray = Gray(blur);
-    error.ImageBinary = Binary(gray);
-
     ///Print a line in the half of rows
-    for( int x = 0 ; x < error.ImageBinary.cols ; x++ )
+    for( int x = 0 ; x < error.image.cols ; x++ )
     {
-        if(error.ImageBinary.at<Vec3b>(error.ImageBinary.rows*0.5, x)[0] == 0)
+        if(error.image.at<Vec3b>(error.image.rows*0.5, x)[0] == 0)
         {
-            error.ImageBinary.at<Vec3b>(error.ImageBinary.rows*0.5, x)[0] = 255;
+            error.image.at<Vec3b>(error.image.rows*0.5, x)[0] = 255;
 
             nCount++;
             nSum += x;
         }
         else
-           error.ImageBinary.at<Vec3b>(240, x)[0] = 0;
+           error.image.at<Vec3b>(240, x)[0] = 0;
     }
     ///Print a vertical line in the half of image
-    for( int x = 0 ; x < error.ImageBinary.rows ; x++ )
-        error.ImageBinary.at<Vec3b>(x,nSum/nCount)[0] = 255;
+    for( int x = 0 ; x < error.image.rows ; x++ )
+        error.image.at<Vec3b>(x,nSum/nCount)[0] = 255;
 
-    error.PIDValue = (nSum/nCount) - error.ImageBinary.cols * .5;
+    error.value = (nSum/nCount) - error.image.cols * .5;
 
     return error;
 }

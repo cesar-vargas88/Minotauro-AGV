@@ -8,8 +8,8 @@ using namespace cv;
 
 struct struct_Error
 {
-    Mat ImageBinary;
-    int PIDValue;
+    Mat image;
+    int value;
 };
 
 class LineDetection
@@ -19,11 +19,13 @@ class LineDetection
         LineDetection();
         virtual ~LineDetection();
 
-        bool OpenCamera(int Camera_ID);
+        bool OpenCamera(int Camera_ID, int Cols, int Rows);
         struct_Error GetError();
 
     private:
 
+        int cols;
+        int rows;
         int camera_ID;
         VideoCapture capture;
         struct_Error error;
