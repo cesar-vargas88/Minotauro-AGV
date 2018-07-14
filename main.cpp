@@ -12,7 +12,7 @@ using namespace cv;
 
 int main(int argc, char *argv[])
 {
-    LineFollower lineFollower(5, 0.5, 2, 0.1, 0.1, 1, 640, 480);
+    LineFollower lineFollower(5, 0.5, 2, 0.1, 0.1, 0, 640, 480);
     MotorsControl motorsControl;
 
     clock_t Start;
@@ -24,9 +24,9 @@ int main(int argc, char *argv[])
     {
         Start = clock();
         motorsControl = lineFollower.GetMotorsControl();
-        cout << motorsControl.PIDvariables << endl;
+        cout << "Error: " << motorsControl.error.value << "\t PID: " << motorsControl.PID << endl;
 
-        imshow("Source", motorsControl.error.image);
+        //imshow("Source", motorsControl.error.image);
 
         //while(clock() <= Start + 1000000)
         //{

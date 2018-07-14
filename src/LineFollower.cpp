@@ -37,6 +37,7 @@ MotorsControl LineFollower::GetMotorsControl()
 
 	LastError = Error;
 
+    motorsControl.PID = PID;
 	/*int SpeedMotorFrontLeft 	= speed - fPID;
 	int SpeedMotorRearLeft 		= speed - fPID;
 	int SpeedMotorFrontRight 	= speed + fPID;
@@ -45,15 +46,15 @@ MotorsControl LineFollower::GetMotorsControl()
 	motorsControl.MotorFrontLeft_PWM;
     motorsControl.MotorFrontRight_PWM;
     motorsControl.MotorRearLeft_PWM;
-    motorsControl.MotorRearRight_PWM;*/
-    motorsControl.PIDvariables =    "Error: "                   + to_string((int)Error) +
-                                    //"\tLastError: "             + to_string(LastError) +
+    motorsControl.MotorRearRight_PWM;
+    motorsControl.PIDvariables =    "Error: " ;                  + to_string((int)Error) +
+                                    "\tLastError: "             + to_string(LastError) +
                                     "\tfPID: "                  + to_string(PID);// +
-                                    //"\tProportional: "          + to_string(Proportional) +
-                                    //"\tIntegral: "              + to_string(Integral) +
-                                    //"\tDerivative: "            + to_string(Derivative)  +
-                                    //"\t(KP * Proportional): "   + to_string(KP * Proportional) +
-                                    //"\t(KI * Integral): "       + to_string(KI * Integral) +
-                                    //"\t(KD * Derivative): "     + to_string(KD * Derivative);
+                                    "\tProportional: "          + to_string(Proportional) +
+                                    "\tIntegral: "              + to_string(Integral) +
+                                    "\tDerivative: "            + to_string(Derivative)  +
+                                    "\t(KP * Proportional): "   + to_string(KP * Proportional) +
+                                    "\t(KI * Integral): "       + to_string(KI * Integral) +
+                                    "\t(KD * Derivative): "     + to_string(KD * Derivative);*/
     return motorsControl;
 }

@@ -13,6 +13,7 @@ struct MotorsControl
     int MotorRearRight_PWM;
     struct_Error error;
     string PIDvariables;
+    float PID;
 };
 
 class LineFollower

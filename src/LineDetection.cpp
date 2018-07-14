@@ -19,7 +19,7 @@ bool LineDetection::OpenCamera(int Camera_ID, int Cols, int Rows)
     capture.set(CV_CAP_PROP_FRAME_WIDTH, rows);
     camera_ID = Camera_ID;
 
-    capture.open(1);
+    capture.open(Camera_ID);
 
     if(capture.isOpened())
         return true;

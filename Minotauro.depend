@@ -46,3 +46,28 @@
 	"LineFollower.h"
 	<string>
 
+1531357408 source:/home/robot/Minotauro-AGV/src/LineDetection.cpp
+	"LineDetection.h"
+
+1531357408 /home/robot/Minotauro-AGV/include/LineDetection.h
+	"opencv2/highgui/highgui.hpp"
+	"opencv2/imgproc/imgproc.hpp"
+
+1531438421 source:/home/robot/Minotauro-AGV/src/LineFollower.cpp
+	"LineFollower.h"
+	<string>
+
+1531438211 /home/robot/Minotauro-AGV/include/LineFollower.h
+	"LineDetection.h"
+	<iostream>
+
+1531438504 source:/home/robot/Minotauro-AGV/main.cpp
+	<opencv2/core/core.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<opencv2/highgui/highgui.hpp>
+	"LineFollower.h"
+	<iostream>
+	<stdio.h>
+	<unistd.h>
+	<ctime>
+
